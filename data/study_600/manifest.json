@@ -1,0 +1,8 @@
+{
+  "prepared_at": "2026-09-18T00:10:30.482557+00:00",
+  "fresh_seed": 1337276763,
+  "fresh_count": 300,
+  "public_count": 300,
+  "public_tasks_sha256": "3f96717792d9155c8fbc358b175b216e126b7eaf62ad536375842ca14f7f0ffd",
+  "instruction": "Freeze for evaluation after a disjoint development preflight; do not tune on evaluation outcomes."
+}

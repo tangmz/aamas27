@@ -1,0 +1,7 @@
+{
+  "generator": "pilot-v1",
+  "seed": 1337276763,
+  "count": 300,
+  "tasks_sha256": "d2a440f94b6687bf5375a96ef09124c94ba45c8688c4f7d7b2fbf2c3a0e80ca8",
+  "answers_sha256": "c815f2f7250dafa028bf6bfabf0ccc12e0e56c85e708cdf235247509e3d4cdf8"
+}
