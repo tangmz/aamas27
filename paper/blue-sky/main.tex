@@ -1,0 +1,107 @@
+\documentclass[sigconf,anonymous]{aamas}
+\usepackage{balance}
+\makeatletter
+\gdef\@copyrightpermission{
+  \begin{minipage}{0.2\columnwidth}
+   \href{https://creativecommons.org/licenses/by/4.0/}{\includegraphics[width=0.90\textwidth]{by}}
+  \end{minipage}\hfill
+  \begin{minipage}{0.8\columnwidth}
+   \href{https://creativecommons.org/licenses/by/4.0/}{This work is licensed under a Creative Commons Attribution International 4.0 License.}
+  \end{minipage}\vspace{5pt}}
+\makeatother
+\setcopyright{ifaamas}
+\acmConference[AAMAS 2027]{Proc.\@ of the 26th International Conference
+on Autonomous Agents and Multiagent Systems (AAMAS 2027)}{3--7 May 2027}{Hanoi, Vietnam}{M.~Baldoni, F.~Fang, W.~Yeoh, N.~Yorke-Smith (eds.)}
+\copyrightyear{2027}\acmYear{2027}\acmDOI{}\acmISBN{}
+\acmSubmissionID{DRAFT}
+\submissionType{Blue Sky Ideas Track}
+\title{The Right to Dissent After Agreement:\\Persistent Challenges for Accountable Agent Decisions}
+\begin{abstract}
+An agent can change its answer without establishing that its earlier objection has been answered. We propose that agent teams distinguish current endorsement from the procedural standing of a registered challenge. A challenge would create an obligation to record a disposition before a decision is closed, even if its author later agrees with the majority. This vision connects generative-agent orchestration to public commitments and institutional protocol design. We specify a bounded challenge lifecycle, distinguish procedural safety from epistemic correctness, and identify the conditions under which persistent review can help or harm. A completed 600-question feasibility study motivates caution: across three repetitions, only one available panel had a correct minority against a wrong majority, and no protected review was activated. These observations establish neither benefit nor equivalence. We use them to motivate an evaluation agenda separating opportunity, activation, adjudication, and cost. The research challenge is to build auditable decision institutions that can preserve unresolved objections without giving agents an unlimited veto.
+\end{abstract}
+\keywords{agent institutions, dissent, social commitments, generative agents, decision protocols}
+\begin{document}
+\maketitle
+
+\section{A challenge can outlive its author’s agreement}
+Consider a team planning an irreversible action. One agent identifies a conflict with a constraint. After reading several confident endorsements, that agent adopts the proposed action. The transcript now records agreement, but it may contain no response to the original conflict. A system that checks only current disagreement has lost the condition that would have triggered scrutiny. This is a possible failure of decision procedure; whether the original objection was correct is a separate question.
+
+We propose a research agenda around \emph{persistent challenge standing}: an admissible objection creates a public review obligation that is not automatically cancelled by a change in its author's answer. Before executing or certifying a decision, a controller must record how the objection was disposed of, or explicitly leave the decision unresolved. The proposed right belongs to a registered challenge in a decision episode, not to every sentence of disagreement. It is bounded, auditable, and compatible with rejecting bad objections.
+
+The longer-term opportunity is a shared interface between heterogeneous agents and the institutions that govern their joint actions. Teams could exchange not only answers and summaries but also unresolved obligations: which claims require resolution, who may adjudicate them, and what authorizes closure. Applications include planning, code review, and resource allocation, where a dissenting agent's concern can remain relevant after that agent is replaced, loses context, or changes its position. These are envisioned applications, not evaluated deployments.
+
+Our contribution is a concrete agenda and an illustrative executable semantics. We do not claim that persistent review improves language-model accuracy, that institutional commitments are new, or that the completed pilot validates the proposed lifecycle.
+
+\section{Positioning: beyond a prompt to disagree}
+Conformity in language models is already documented. Zhu et al.\ \cite{zhu2025} study majority influence and interventions. Work on decision protocols shows that aggregation rules matter\cite{kaesberg2025}, and majority voting can explain much of the gain attributed to debate\cite{choi2025}. These findings preclude treating disagreement itself as the novelty.
+
+Closer alternatives address information retention and correction. Free-MAD scores answer trajectories and introduces anti-conformity\cite{cui2025}; Diversity-Aware Retention selects differing messages for propagation\cite{nguyen2026}. A recent account models how withholding dissent changes the benefit of discussion\cite{mansuri2026}. These approaches motivate a distinction between a challenge remaining \emph{available} and a controller being \emph{obliged to dispose of it} before closure.
+
+The institutional foundation is longstanding. Singh's social semantics locates agent communication in public commitments rather than inaccessible mental states\cite{singh1999}. Our proposal applies that perspective to the instability of generative agents' endorsements. The research opportunity is an enforceable connection between archived objections, adjudication responsibilities, and authorized actions. Whether that connection yields sufficiently distinct empirical or theoretical advances remains an open question. A full comparison must include retention alone, unconditional review, and commitment-based protocols; renaming a memory buffer a right would not establish a contribution.
+
+\section{An illustrative bounded protocol}
+For decision episode $e$, let $D_t$ be a provisional decision and $L_t$ a registry of challenges. Each record contains an identifier, author, disputed claim, alternative, evidence reference, and status. Admissibility is structural and task-dependent: an alternative and a specific objection must be provided. It must not depend on a reference answer available only to the evaluator. Duplicate admission and identity checks are explicit policy choices.
+
+\begin{table}[t]
+\caption{Illustrative lifecycle. Endorsements and standing are separate.}
+\label{tab:lifecycle}
+\begin{tabular}{ll}
+\toprule
+Event & Effect on a registered challenge\\
+\midrule
+Admit objection & Create immutable pending record\\
+Author changes answer & Preserve pending status\\
+Review upholds/rejects & Record disposition and reason\\
+Deadline/budget expires & Mark pending record deferred\\
+Close resolved decision & Require no pending/deferred record\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A resolved closure is permitted only if every admitted challenge has an authorized disposition. Exhaustion produces an explicit unresolved result rather than silent closure. A cap of $K$ admitted challenges bounds storage and review requests; overflow is logged and also prevents a resolved closure in the conservative prototype. A deployment may choose a different overflow policy, but must state the resulting weaker guarantee. A disposition records the reviewer and evidence considered; it is not itself proof that the adjudication was correct.
+
+\paragraph{Procedural safety.}
+Under the assumptions that every closure passes through the controller and its registry is not externally modified, the transition rules ensure: (i) changing an endorsement cannot delete pending standing; and (ii) no resolved closure is possible with a pending or deferred challenge. Initially the registry is empty. Admission adds a pending record; endorsement changes preserve it; only authorized disposition or explicit deferral changes its status. The closure guard then establishes (ii). This is an invariant of the specified controller, not a theorem about LLM behaviour. The reference implementation checks 13 finite illustrative traces, including endorsement changes, disposition, deadline, and capacity exhaustion.
+
+\paragraph{Termination and limits.}
+The controller must close admission at a deadline, bound review attempts, and terminate outstanding reviews with explicit deferral. Under these scheduling assumptions, the episode can terminate unresolved even when reviewers fail. Persistent challenges therefore need not imply an unlimited blocking loop. Conversely, a malicious source can consume the quota and cause abstention. Identity, admission cost, duplicate detection, and escalation authority are essential open problems. Perfect procedural compliance can still produce a wrong answer if the reviewer rejects a sound objection or accepts a false one.
+
+\paragraph{When persistence changes outcomes.}
+Let reactive review be triggered by a current objection. Compare a persistent policy that adds review on episodes $E$ where registered standing remains but no current objection survives. For this comparison, assume identical upstream responses and identical decisions outside $E$, with the same review response whenever both policies invoke review. If $Y$ denotes correctness, then
+\begin{equation}
+\mathbb{E}[Y_P-Y_R]=\Pr(E)\left(\Pr(Y_{\rm review}=1\mid E)-\Pr(Y_{\rm base}=1\mid E)\right).
+\end{equation}
+This is a decomposition by conditioning, not a new general theory of debate. It exposes two prerequisites: persistence must change review exposure, and the additional adjudication must outperform the decision it replaces. There is no assumed independence between these events. If base decisions are already correct, added review can only preserve or reduce their accuracy. With fixed review cost $c$, the incremental expected cost in this restricted comparison is $c\Pr(E)$; variable costs require averaging within $E$.
+
+\section{A feasibility study that did not expose the mechanism}
+We first implemented five-agent protocols with a post-discussion dissent checkpoint: majority voting, ordinary debate, protected reconsideration, protected review, and five controls covering independent revision, unprotected declarations, answer reminders, and additional computation. We evaluated 300 public BIG-Bench Hard items\cite{suzgun2022} and 300 procedural reasoning items, with three repetitions using the recorded model identifier \texttt{deepseek/deepseek-v4.1-flash} through Together on OpenRouter. Public tasks cover deduction and object tracking; generated tasks cover ordering counts, Boolean counts, and shortest paths, with two exact solution procedures per family. Provider sampling seeds were not sent.
+
+Of 1,800 scheduled panels, 1,791 had complete initial responses. There were 1,757 unanimously correct panels, 33 correct-majority/wrong-minority panels, and one wrong-majority/correct-minority panel. Our predetermined policy stopped unanimous panels. Only 34 panels entered deliberation, and 32 completed every branch. Majority voting was correct on 1,790/1,791 available panels. Every other condition was correct on its 1,789 available outcomes, largely because unanimous decisions were reused. No protected escalation or appeal review occurred. In the single correct-minority case, ordinary debate changed D,E,E,D,E to D,D,D,D,D before the checkpoint.
+
+These are preliminary findings from a poorly calibrated opportunity distribution, not evidence that protection works or is unnecessary. The observed zero differences and degenerate paired bootstrap intervals do not establish equivalence. Nine initial-panel and two deliberation failures remain explicit; completed outcomes must not be confused with success over all scheduled episodes. Eight failures violated the response-field schema and three ended with provider completion errors. The saved journals record 9,980 attempts and approximately US\$8.01 in known charges, with incomplete cost accounting for eight logical calls.
+
+The pilot motivates an \emph{activation audit}: report opportunities for challenge, admissible registrations, persistence after endorsement change, actual reviews, and dispositions before interpreting end-to-end accuracy. Large numbers of easy questions can otherwise make an unevaluated institution appear thoroughly tested. The pilot does not demonstrate the motivating endorsement-erasure failure; that remains to be tested.
+
+\section{A research agenda with falsifiable boundaries}
+\paragraph{Separate exposure from adjudication.}
+We have constructed an offline candidate pool from saved independent answers: 31 questions have both a valid correct and a valid incorrect response. For each, a fixed pair of archived arguments receives hypothetical support counts 4:1 and 1:4. Argument text is not duplicated. Both correct-majority and incorrect-majority conditions are included. These 62 stimuli manipulate stated support while holding evidence fixed; they do not represent 62 naturally observed teams or independent questions. A deterministic split assigns nine questions to development and 22 to evaluation. Twenty-two of the 31 questions are Boolean tasks, limiting breadth.
+
+The pool is selected after observing the pilot and is not a fresh representative benchmark. Manual argument-quality and ambiguity review is pending. Future collection must randomize candidate order and execution order, preserve all failures, and report question-level dependence. A development check should establish measurable changes in exposure or decisions; if it again produces ceiling performance, no efficacy claim follows.
+
+\paragraph{Ablate the institution, not just its slogan.}
+Planned comparisons include ordinary closure, an explicit checkpoint, a neutral second review, review conditional on a live objection, and persistent review. Pair policies using common saved intermediate responses when estimating the effect of decision rules, and separately study agents that know their procedural rights in advance. These are different estimands. Reactive and persistent policies must receive the same registered evidence; otherwise retention and authority are confounded. Measure harmful overturns when the majority is correct as well as recovery when it is wrong, together with unresolved outcomes, attempts, tokens, and cost.
+
+In this enriched replay pool, every episode already contains competing arguments. Reviewing every registered challenge therefore reduces to unconditional review. We cannot claim a distinct accuracy advantage over that baseline. A broader study must include episodes without admissible challenges and compare review allocation under fixed resources. A count-blind reviewer also changes available information; factorial comparisons are needed to isolate authority, blinding, and additional computation.
+
+\paragraph{Develop institutions that compose.}
+Beyond short debates, what constitutes an adequate disposition of a tool-produced objection? Can a downstream agent inherit unresolved obligations when its predecessor is replaced? How should responsibilities and deadlines compose across teams? A portable challenge record could link evidence to an action authorization, while allowing independent agents to inspect the record without sharing private reasoning. Such interoperability requires provenance, access control, and machine-checkable lifecycle semantics, not unrestricted transcript publication.
+
+\paragraph{Study the price of the right.}
+Persistent standing may protect a sound objection or preserve a persuasive error. Poorly calibrated admission rules can create denial of service, unfairly exclude low-confidence agents, or increase latency without improving decisions. Reviewers may share the team's error. Evaluation should therefore estimate a frontier among review exposure, error correction, harmful overturns, deferral, and resource use. A useful result may identify conditions where immediate closure is preferable. The community-level goal is accountable decision procedures whose obligations remain visible through changes in agent belief, membership, and context---with empirical tests that can reject their usefulness.
+
+\paragraph{AI assistance and artifact status.}
+AI coding and writing assistance contributed to the hypotheses, methodology, implementation, and this draft. An accompanying disclosure records the prompts and known provenance, with author verification required. The completed pilot, the offline candidate construction, and the illustrative controller checks are distinct artifacts. No new model responses for the proposed persistent protocol have been collected.
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+\end{document}

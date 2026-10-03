@@ -6,6 +6,7 @@ The software has been tested with offline fixtures. **No live experiment or empi
 
 ## Start here
 
+- [Study-01 recovery plan](docs/recovery-plan.md), [Blue Sky paper draft](paper/blue-sky/README.md), and [offline recovery notebook](notebooks/recovery_review.ipynb). These preserve the original results and clearly distinguish the proposed persistent-challenge protocol from collected evidence.
 - [Interactive experiment notebook for Anaconda](notebooks/run_experiment.ipynb): run collection, see progress, and view statistical results in one notebook. Includes environment setup and offline demo, live preflight, and full-study modes.
 - [Research workflow and statistical specification](docs/research-workflow.md)
 - [Study configuration](configs/study.json)
